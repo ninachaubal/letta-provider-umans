@@ -1,6 +1,6 @@
 {
   "name": "letta-provider-umans",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Umans.ai provider for Letta Code — subscription-based access to coding-optimized models",
   "author": "nina",
   "license": "MIT",
