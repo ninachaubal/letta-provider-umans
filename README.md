@@ -1,5 +1,10 @@
 # letta-provider-umans
 
+[![npm version](https://img.shields.io/npm/v/letta-provider-umans)](https://www.npmjs.com/package/letta-provider-umans)
+[![npm downloads](https://img.shields.io/npm/dw/letta-provider-umans)](https://www.npmjs.com/package/letta-provider-umans)
+[![GitHub stars](https://img.shields.io/github/stars/ninachaubal/letta-provider-umans)](https://github.com/ninachaubal/letta-provider-umans)
+[![License](https://img.shields.io/npm/l/letta-provider-umans)](https://github.com/ninachaubal/letta-provider-umans/blob/main/LICENSE)
+
 [Umans.ai](https://umans.ai) provider for [Letta Code](https://docs.letta.com/letta-code). Adds subscription-based access to coding-optimized models including Kimi K2.7, GLM 5.2, and more.
 
 ## Install
