@@ -1,0 +1,26 @@
+{
+  "name": "letta-provider-umans",
+  "version": "0.1.0",
+  "description": "Umans.ai provider for Letta Code — subscription-based access to coding-optimized models",
+  "author": "nina",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "letta-package",
+    "letta-mod",
+    "letta-code",
+    "umans",
+    "provider",
+    "llm"
+  ],
+  "files": [
+    "README.md",
+    "MOD.md",
+    "mods"
+  ],
+  "letta": {
+    "manifestVersion": 1,
+    "mods": ["./mods/index.ts"],
+    "capabilities": ["providers"]
+  }
+}
