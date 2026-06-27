@@ -260,8 +260,7 @@ export default function activate(letta: any) {
 
   return letta.providers.register("umans", {
     name: "Umans",
-    description:
-      "Umans Code gateway — subscription-based access to coding-optimized models including Kimi K2.7, GLM 5.2, and more.",
+    description: "Connect a subscription account",
     api: "openai-completions",
     baseUrl: DEFAULT_BASE_URL,
     apiKey: API_KEY_ENV,
