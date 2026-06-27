@@ -8,6 +8,10 @@ Ask your Letta Code agent to install this mod:
 
 > Install the Umans provider mod from `~/workspace/letta/letta-provider-umans`
 
+If you plan to use GLM 5.1 or GLM 5.2, also ask your agent to install the image-understanding mod for vision handoff:
+
+> Install the @letta-ai/image-understanding mod
+
 Or install manually:
 
 ```bash
