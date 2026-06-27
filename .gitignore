@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# npm
+*.log
+npm-debug.log*
+.npmrc
+
+# Environment
+.env
+.env.*
