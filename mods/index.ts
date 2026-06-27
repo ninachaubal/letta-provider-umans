@@ -260,7 +260,7 @@ export default function activate(letta: any) {
 
   return letta.providers.register("umans", {
     name: "Umans",
-    description: "Connect a subscription account",
+    description: "Connect a Umans API key",
     api: "openai-completions",
     baseUrl: DEFAULT_BASE_URL,
     apiKey: API_KEY_ENV,
