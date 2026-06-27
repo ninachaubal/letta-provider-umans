@@ -10,7 +10,7 @@ Ask your Letta Code agent to install this mod:
 
 If you plan to use GLM 5.1 or GLM 5.2, ask your agent to also install the image-understanding mod for vision handoff:
 
-> Install the Umans provider mod from `https://github.com/ninachaubal/letta-provider-umans` and also install the `@letta-ai/image-understanding` mod for vision handoff
+> Install the Umans provider mod from `https://github.com/ninachaubal/letta-provider-umans` and also install the `npm:@letta-ai/image-understanding` mod for vision handoff
 
 Or install manually:
 
