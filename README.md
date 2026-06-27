@@ -1,6 +1,6 @@
 # letta-provider-umans
 
-[Umans.ai](https://umans.ai) provider for [Letta Code](https://docs.letta.com/letta-code) — subscription-based access to coding-optimized models including Kimi K2.7, GLM 5.2, and more.
+[Umans.ai](https://umans.ai) provider for [Letta Code](https://docs.letta.com/letta-code). Adds subscription-based access to coding-optimized models including Kimi K2.7, GLM 5.2, and more.
 
 ## Install
 
@@ -15,7 +15,7 @@ If you plan to use GLM 5.1 or GLM 5.2, ask your agent to also install the image-
 Or install manually:
 
 ```bash
-cp mods/index.ts ~/.letta/mods/umans-provider.ts
+letta install https://github.com/ninachaubal/letta-provider-umans
 ```
 
 Then reload:
@@ -24,27 +24,23 @@ Then reload:
 /reload
 ```
 
-## Setup
+## Connect
 
-### Option 1: `/connect` (recommended)
+Get an API key from [app.umans.ai/billing](https://app.umans.ai/billing) → Dashboard → API Keys, then either:
 
-Run `/connect umans` in Letta Code, paste your API key when prompted. The key is stored locally — no env vars needed.
+```
+/connect umans
+```
 
-### Option 2: Environment variable
+Or set an environment variable:
 
 ```bash
 export UMANS_API_KEY="uk-your-key-here"
 ```
 
-### Getting an API key
+## Models
 
-1. Log in to [app.umans.ai/billing](https://app.umans.ai/billing)
-2. Go to Dashboard → API Keys
-3. Generate a new key (shown only once — copy it immediately)
-
-## Available models
-
-Models are discovered live from the Umans gateway at load time. New models appear automatically — no mod update needed. If the gateway is unreachable, a static fallback catalog is used.
+Discovered live from the Umans gateway. New models appear automatically after `/reload` — no mod update needed.
 
 | Model | Context | Vision | Reasoning |
 | --- | --- | --- | --- |
@@ -56,32 +52,32 @@ Models are discovered live from the Umans gateway at load time. New models appea
 | `umans-flash` | 262K | native | yes (can disable) |
 | `umans-qwen3.6-35b-a3b` | 262K | native | yes (can disable) |
 
-Select a model with `/model umans/umans-glm-5.2`.
+Select with `/model umans/umans-glm-5.2`.
 
-## Vision handoff for GLM 5.1 / GLM 5.2
+## Vision handoff for GLM models
 
-GLM 5.1 and GLM 5.2 are the most popular models on Umans, but they don't have native vision — they need a vision handoff. Install the official image-understanding mod:
+GLM 5.1 and GLM 5.2 don't have native vision. Install the image-understanding mod to bridge images to text:
 
 ```bash
 letta install npm:@letta-ai/image-understanding
 ```
 
-Since the provider uses the OpenAI-compatible endpoint, the same API key from `/connect umans` works. You just need to point the image-understanding mod at Umans and pick a native-vision model for the handoff:
+The provider uses the OpenAI-compatible endpoint, so the same API key from `/connect umans` works. Point the image-understanding mod at Umans and pick a native-vision model:
 
 ```bash
 export IMAGE_UNDERSTANDING_PROVIDER=openai-compatible
 export IMAGE_UNDERSTANDING_API_KEY="$UMANS_API_KEY"
-export IMAGE_UNDERSTANDING_MODEL=umans-kimi-k2.7
 export IMAGE_UNDERSTANDING_BASE_URL=https://api.code.umans.ai/v1
+export IMAGE_UNDERSTANDING_MODEL=umans-kimi-k2.7
 ```
 
-For example, to use `umans-flash` as the vision model instead:
+To use a different vision model, e.g. `umans-flash`:
 
 ```bash
 export IMAGE_UNDERSTANDING_MODEL=umans-flash
 ```
 
-Enable auto-captioning so images are automatically described before the GLM model sees them:
+Enable auto-captioning so images are described before the GLM model sees them:
 
 ```bash
 export IMAGE_UNDERSTANDING_AUTO_CAPTION=1
@@ -93,22 +89,6 @@ Reload and verify:
 ```
 /reload
 /image-understanding-status
-```
-
-Now when you send an image to a GLM model, the image-understanding mod will analyze it with the configured vision model (e.g. `umans-kimi-k2.7`) and replace it with a text description the GLM model can reason over.
-
-## API endpoint
-
-This mod uses the OpenAI-compatible endpoint at `https://api.code.umans.ai/v1`. Umans also provides an Anthropic Messages API at `https://api.code.umans.ai` — both work with the same API key.
-
-## Safety
-
-Mods are trusted local code. If a mod breaks startup or command handling, recover with:
-
-```bash
-letta --no-mods
-# or
-LETTA_DISABLE_MODS=1 letta
 ```
 
 ## License
