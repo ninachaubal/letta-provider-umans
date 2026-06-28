@@ -20,3 +20,6 @@ npm-debug.log*
 # Environment
 .env
 .env.*
+
+# Letta Code
+.letta/
