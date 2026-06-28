@@ -222,6 +222,30 @@ async function fetchModelCatalog(
   }
 }
 
+/**
+ * Compatibility settings for the Umans gateway.
+ *
+ * Based on the Umans Code API docs (app.umans.ai/offers/code/docs):
+ * - reasoning_effort IS supported on the OpenAI route (none/low/medium/high,
+ *   other values mapped to nearest level)
+ * - max_completion_tokens IS supported on the OpenAI route
+ * - store, developer role, stream_options, strict mode are NOT documented
+ *   and are disabled to avoid 400s from unknown parameters.
+ *
+ * Without these overrides, pi-ai's detectCompat() treats Umans as a standard
+ * OpenAI provider (since the URL doesn't match any known pattern), enabling
+ * store, developer role, stream_options, and strict — all of which the
+ * gateway likely doesn't recognize.
+ */
+const UMANS_COMPAT = {
+  supportsStore: false,
+  supportsDeveloperRole: false,
+  supportsReasoningEffort: true,
+  maxTokensField: "max_completion_tokens" as const,
+  supportsStrictMode: false,
+  supportsUsageInStreaming: false,
+};
+
 /** Map Umans model info to Letta model format. */
 function toLettaModel(id: string, info: UmansModelInfo) {
   const capabilities = info.capabilities ?? {};
@@ -236,6 +260,7 @@ function toLettaModel(id: string, info: UmansModelInfo) {
       capabilities.recommended_max_tokens,
       capabilities.max_completion_tokens,
     ),
+    compat: UMANS_COMPAT,
   };
 }
 
