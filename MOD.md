@@ -1,3 +1,8 @@
+---
+name: "letta-provider-umans"
+description: "Umans.ai provider for Letta Code — subscription-based access to coding-optimized models including Kimi K2.7, GLM 5.2, and more."
+---
+
 # MOD.md — Agent-facing behavioral contract
 
 ## What this mod does
