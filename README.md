@@ -98,7 +98,7 @@ Reload and verify:
 
 ## Changelog
 
-### v0.1.5 (unpublished)
+### v0.1.5
 
 - **Fix:** Enable `supportsUsageInStreaming` so Letta receives token counts from streaming responses. Without usage data, Letta fell back to a char/4 heuristic that underestimates context size for non-GPT tokenizers (Kimi, GLM), preventing proactive compaction from triggering. Long conversations would hit the context window limit with no recovery.
 
