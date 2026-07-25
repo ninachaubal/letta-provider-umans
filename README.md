@@ -104,7 +104,7 @@ Reload and verify:
 
 ### v0.1.4
 
-- **Fix:** Add required MOD.md frontmatter (name, description) for mod package format. Absorbed unpublished fix from v0.1.3 cycle.
+- **Fix:** Add required MOD.md frontmatter (name, description) for mod package format.
 
 ### v0.1.3
 
