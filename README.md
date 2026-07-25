@@ -96,6 +96,32 @@ Reload and verify:
 /image-understanding-status
 ```
 
+## Changelog
+
+### v0.1.5 (unpublished)
+
+- **Fix:** Enable `supportsUsageInStreaming` so Letta receives token counts from streaming responses. Without usage data, Letta fell back to a char/4 heuristic that underestimates context size for non-GPT tokenizers (Kimi, GLM), preventing proactive compaction from triggering. Long conversations would hit the context window limit with no recovery.
+
+### v0.1.4
+
+- **Fix:** Add required MOD.md frontmatter (name, description) for mod package format. Absorbed unpublished fix from v0.1.3 cycle.
+
+### v0.1.3
+
+- **Fix:** Use `max_completion_tokens - 1` for `maxTokens` instead of `recommended_max_tokens`, which wasn't always available from the gateway.
+
+### v0.1.2
+
+- **Fix:** Add `UMANS_COMPAT` settings to prevent unsupported OpenAI parameters (`store`, `developer` role, `strict` mode) from being sent to the Umans gateway, which caused 400 errors.
+
+### v0.1.1
+
+- Version bump only (no code changes).
+
+### v0.1.0
+
+- Initial release. Registers the Umans Code gateway as a Letta Code provider using the OpenAI-compatible API endpoint. Dynamic model discovery from the gateway with static fallback catalog. `/connect umans` support with local API key storage.
+
 ## License
 
 MIT
