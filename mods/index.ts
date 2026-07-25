@@ -238,13 +238,23 @@ async function fetchModelCatalog(
  * - reasoning_effort IS supported on the OpenAI route (none/low/medium/high,
  *   other values mapped to nearest level)
  * - max_completion_tokens IS supported on the OpenAI route
- * - store, developer role, stream_options, strict mode are NOT documented
- *   and are disabled to avoid 400s from unknown parameters.
+ * - store, developer role, strict mode are NOT documented and are disabled
+ *   to avoid 400s from unknown parameters.
+ * - stream_options IS supported (verified: include_usage returns token
+ *   counts in the final streaming chunk).
  *
  * Without these overrides, pi-ai's detectCompat() treats Umans as a standard
  * OpenAI provider (since the URL doesn't match any known pattern), enabling
- * store, developer role, stream_options, and strict — all of which the
- * gateway likely doesn't recognize.
+ * store, developer role, and strict — all of which the gateway likely
+ * doesn't recognize.
+ *
+ * supportsUsageInStreaming is enabled because the gateway supports
+ * stream_options: { include_usage: true } on the OpenAI route. Without it,
+ * streaming responses contain no usage data, so Letta falls back to a
+ * char/4 heuristic for token counting — which underestimates context size
+ * for models with non-GPT tokenizers (e.g. Kimi). This prevents proactive
+ * compaction from triggering and causes long conversations to hit the
+ * context window limit with no recovery.
  */
 const UMANS_COMPAT = {
   supportsStore: false,
@@ -252,7 +262,7 @@ const UMANS_COMPAT = {
   supportsReasoningEffort: true,
   maxTokensField: "max_completion_tokens" as const,
   supportsStrictMode: false,
-  supportsUsageInStreaming: false,
+  supportsUsageInStreaming: true,
 };
 
 /** Map Umans model info to Letta model format. */
