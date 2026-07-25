@@ -4,6 +4,11 @@
   "description": "Umans.ai provider for Letta Code — subscription-based access to coding-optimized models",
   "author": "nina",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ninachaubal/letta-provider-umans.git"
+  },
+  "homepage": "https://github.com/ninachaubal/letta-provider-umans#readme",
   "type": "module",
   "keywords": [
     "letta-package",
