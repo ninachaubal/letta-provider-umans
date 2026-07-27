@@ -98,6 +98,11 @@ Reload and verify:
 
 ## Changelog
 
+### v0.2.0
+
+- **Fix:** Use `recommended_max_tokens` as the output budget instead of `max_completion_tokens - 1`. The previous approach requested nearly the entire context window as output (e.g., 262,143 for Kimi models), so any non-trivial prompt made prompt + maxTokens exceed the context window — causing `max_tokens_exceeded` errors. Now uses `min(recommended_max_tokens, max_completion_tokens - 1)`, matching the official `umans-ai/pi-provider-umans` integration. For Kimi models this yields 32,768 output tokens.
+- **Test:** Added regression tests for `safeMaxTokens` covering recommended, cap, fallback, and edge cases.
+
 ### v0.1.5
 
 - **Fix:** Enable `supportsUsageInStreaming` so Letta receives token counts from streaming responses. Without usage data, Letta fell back to a char/4 heuristic that underestimates context size for non-GPT tokenizers (Kimi, GLM), preventing proactive compaction from triggering. Long conversations would hit the context window limit with no recovery.
@@ -108,7 +113,7 @@ Reload and verify:
 
 ### v0.1.3
 
-- **Fix:** Use `max_completion_tokens - 1` for `maxTokens` instead of `recommended_max_tokens`, which wasn't always available from the gateway.
+- **Fix:** Use `max_completion_tokens - 1` for `maxTokens` instead of `recommended_max_tokens`, which wasn't always available from the gateway. *(Reverted in v0.2.0 — caused `max_tokens_exceeded` errors when prompt + output budget exceeded context window.)*
 
 ### v0.1.2
 

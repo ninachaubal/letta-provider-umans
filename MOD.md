@@ -45,7 +45,7 @@ For GLM vision support, install the `@letta-ai/image-understanding` mod and conf
 ## Constraints
 
 - Provider mod is local-agent only. Does not work with Constellation/cloud agents.
-- The gateway rejects `max_tokens >= max_completion_tokens` with a 400. The mod calculates `maxTokens` as `min(recommended, cap - 1)` to avoid this.
+- The gateway rejects `max_tokens >= max_completion_tokens` with a 400. The mod calculates `maxTokens` as `min(recommended_max_tokens, max_completion_tokens - 1)` to stay within the gateway limit while using the recommended output budget.
 - `listModels` fetches from `/models/info` with a 5-second timeout. On any error, the static fallback catalog is used.
 - The model info endpoint is public (no auth needed), so dynamic discovery works even before the user connects.
 

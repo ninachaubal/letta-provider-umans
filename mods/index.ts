@@ -168,23 +168,25 @@ const STATIC_CATALOG: Record<string, UmansModelInfo> = {
  * Resolve an output budget that never hits the gateway's hard cap.
  * The gateway rejects max_tokens >= max_completion_tokens with a 400.
  *
- * Use max_completion_tokens - 1 to maximize output. The
- * recommended_max_tokens field from the gateway is a conservative
- * suggestion (e.g. 32768 for Kimi models), but Moonshot's own provider
- * sets maxTokens to the full context window (262144) for the same models.
- * Using the recommended value was too low — reasoning counts toward the
- * output cap, so Kimi K2.7-Code (always-on reasoning) would hit the 32K
- * limit mid-response, triggering follow-up requests that burned through
- * users' request quotas.
+ * Use recommended_max_tokens as the primary value (e.g. 32768 for Kimi
+ * models), with max_completion_tokens - 1 only as a ceiling. This matches
+ * the official umans-ai/pi-provider-umans integration.
+ *
+ * Previously this function preferred cap - 1, which for Kimi models
+ * yielded 262,143 — nearly the entire context window as output budget.
+ * When the prompt grew, prompt + maxTokens exceeded the context window,
+ * causing max_tokens_exceeded errors. The recommended value of 32K
+ * leaves room for the prompt while still being generous for reasoning +
+ * output.
  */
-function safeMaxTokens(recommended?: number, cap?: number): number {
-  if (typeof cap === "number" && cap > 1) {
-    return cap - 1;
+export function safeMaxTokens(recommended?: number, cap?: number): number {
+  const fallback = 32768;
+  let value =
+    typeof recommended === "number" && recommended > 0 ? recommended : fallback;
+  if (typeof cap === "number" && cap > 0) {
+    value = Math.min(value, cap - 1);
   }
-  if (typeof recommended === "number" && recommended > 0) {
-    return recommended;
-  }
-  return 32768;
+  return Math.max(value, 1);
 }
 
 function toInputModalities(info: UmansModelInfo): ("text" | "image")[] {
